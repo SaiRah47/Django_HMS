@@ -12,13 +12,10 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            # person = Person(user=request.user.username)
-            # print(Person.objects.get(user=user))
             person = Person.objects.filter(user=user).values('type')[0]
             print(person)
             return render(request, 'hms/home.html', {'person': person})
         else:
-            # messages.error(request, 'Invalid Credentials')
             return redirect('login')
     else:
         return render(request, 'hms/login.html')
@@ -48,7 +45,6 @@ def register(request):
                     person = Person(user=user)
                     person.type = int(personType)
                     person.save()
-                    # messages.success(request, 'User Registered Successfully')
                     return redirect('login')
 
         else:
