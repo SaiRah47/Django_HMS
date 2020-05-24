@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from hms.models import Person
 from .models import Patient
-# Create your views here.
+
 
 def profile(request):
     user = request.user
