@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from hms.models import Person
-from .models import Doctor
+from .models import Doctor, Prescription
+from patient.models import Patient
+import datetime
 
 
 def profile(request):
@@ -23,7 +25,6 @@ def profile(request):
                 return redirect('d_profile')
 
             obj = Doctor.objects.create(person=person, phone=phone, gender=gender, age=age, address=address)
-            print(created, obj)
             obj.save()
 
             return redirect('home')
@@ -41,5 +42,31 @@ def profile(request):
         return render(request, 'doctor/profile.html', {'doctor': doctor, 'users': users})
     else:
         return render(request, 'doctor/profile.html', {'doctor': None, 'users': users})
+
+
+def prescription(request):
+    if request.method == 'POST':
+        patient = request.POST['patient']
+        disease = request.POST['disease']
+        prescription = request.POST['prescription']
+        
+        patient_p = Person.objects.get(user=User.objects.get(username=patient))
+        doctor_p  = Person.objects.get(user=User.objects.get(username=request.user))
+        doc_pres = Prescription(patient=Patient.objects.get(person=patient_p), doctor=Doctor.objects.get(person=doctor_p))
+        doc_pres.prescription = prescription
+        doc_pres.disease = disease
+        doc_pres.date = datetime.datetime.now()
+        doc_pres.save()
+        return redirect('prescription')
+    else: 
+        person = Person.objects.get(user=User.objects.get(username=request.user))
+        patients = Patient.objects.all()
+        prescriptions = Prescription.objects.filter(doctor = Doctor.objects.get(person=person))
+        print(person,patients,prescriptions)
+        return render(request, 'doctor/prescription.html', {
+            'prescriptions': prescriptions,
+            'patients': patients,
+            'person': person
+        })
 
 

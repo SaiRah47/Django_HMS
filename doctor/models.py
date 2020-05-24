@@ -1,5 +1,6 @@
 from django.db import models
 from hms.models import Person
+from patient.models import Patient
 
 
 class Doctor(models.Model):
@@ -11,4 +12,14 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.person.user.username
-    
+
+class Prescription(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    prescription = models.CharField(max_length=200)
+    disease = models.CharField(max_length=256)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return self.patient.person.user.username + " with " + self.prescription
+        
