@@ -15,8 +15,15 @@ def profile(request):
         address = request.POST['address']
         age = request.POST['age']
         
+
         if phone and gender and address and age:
+            if Doctor.objects.filter(person=person).exists():
+                doctor = Doctor.objects.get(person=person)
+                doctor_val = Doctor.objects.filter(person=person).update(person=person, phone=phone, gender=gender, address=address, age=age)
+                return redirect('d_profile')
+
             obj = Doctor.objects.create(person=person, phone=phone, gender=gender, age=age, address=address)
+            print(created, obj)
             obj.save()
 
             return redirect('home')
