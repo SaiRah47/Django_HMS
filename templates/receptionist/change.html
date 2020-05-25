@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %} | User Page {% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">HMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            {% if person.type == 1%}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'appointment' %}">Appointments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Invoice & Payments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'p_profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'history'%}">Medical History</a>
+            </li>
+            {% elif person.type == 0 %}
+            <li class="nav-item">
+                <a class="nav-link" href="#">Appointments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Prescriptions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'appointment' %}">Dashboard</a>
+            </li>
+            {% endif %}
+            <li class="nav-item mr-3">
+                <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i
+                        class="fas fa-sign-out-alt"></i> Logout</a>
+                <form action="{% url 'logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login'  %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container">
+<form action="{%url 'update' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type='hidden' name='id' value='{{appointment.pk}}'>
+    </div>
+    <div class="form-group">
+        <select class="form-control" disabled="disabled" id="patient" name="patient">
+            <option value="{{appointment.patient}}">{{appointment.patient}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="doctor">Select Doctor</label>
+        <select class="form-control" id="doctor" name="doctor">
+            {%for i in doctors %}
+            <option value="{{i.person}}">{{i.person.user.username}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="input-field col s6">
+        <input type="date" name='date' id="date">
+        <label for="date" class="active">Date</label>
+    </div>
+    <div class="input-field col s6">
+        <input type="time" name='time' min="09:30" max="20:30">
+        <label for="time" class="active">Time</label>
+    </div>
+        <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" name="status">
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+</form>
+</div>
+
+
+{% endblock %}
