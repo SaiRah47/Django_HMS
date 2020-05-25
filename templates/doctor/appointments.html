@@ -20,7 +20,7 @@
             </li>
             {% if person.type == 1%}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'appointment' %}">Appointments</a>
+                <a class="nav-link" href="{% url 'p_appointment' %}">Appointments</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Invoice & Payments</a>
@@ -33,13 +33,13 @@
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Appointments</a>
+                <a class="nav-link" href="{% url 'd_appointment' %}">Appointments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Prescriptions</a>
+                <a class="nav-link" href="{%url 'prescription' %}">Prescriptions</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="{%url 'd_profile'%}">Profile</a>
             </li>
             {% endif %}
             <li class="nav-item mr-3">
@@ -64,20 +64,17 @@
 <table class=" mt-5 table table-striped table-condensed">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Consulted Doctor</th>
+      <th scope="col">Patient Info</th>
       <th scope="col">Date and Time</th>
-      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
   {% for i in appointments %}
     <tr>
-      <td>{{i.doctor}}</td>
+      <td>{{i.patient}}</td>
       <td>{{i.date}}</td>
-      <td>{{i.status}}</td>
     </tr>
    {% endfor %}
   </tbody>
 </table>
-
 {% endblock %}

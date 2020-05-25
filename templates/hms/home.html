@@ -17,9 +17,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Contact Us</a>
       </li>
-      {% if person.type == 1%}
+      {% if person.type == 1 %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Appointments</a>
+        <a class="nav-link" href="{% url 'p_appointment' %}">Appointments</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Invoice & Payments</a>
@@ -30,15 +30,19 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'history' %}">Medical History</a>
       </li>
-      {% else %}
+      {% elif person.type == 0 %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Appointments</a>
+        <a class="nav-link" href="{% url 'd_appointment' %}">Appointments</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'prescription' %} ">Prescriptions</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'd_profile' %}">Profile</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'appointment' %}">Dashboard</a>
       </li>
       {% endif %}
       <li class="nav-item mr-3">
@@ -65,8 +69,10 @@
         <div class="col-md-12">
           {% if person.type == 1 %}
             <h1>Welcome Patient</h1>
-          {% else %}
+          {% elif person.type == 0 %}
             <h1>Welcome Doctor</h1>
+          {% else %}
+             <h1>Welcome Receptionist</h1>
           {% endif %}
         </div>
       </div>

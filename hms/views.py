@@ -13,8 +13,8 @@ def login(request):
         print(user)
         if user is not None:
             auth.login(request, user)
-            person = Person.objects.filter(user=user).values('type')[0]
-            print(person)
+            person = Person.objects.get(user = User.objects.get(username=request.user))
+            print(person.type)
             return render(request, 'hms/home.html', {'person': person})
         else:
             return redirect('login')
