@@ -10,3 +10,20 @@ table.table thead th {
 table.table tbody td {
     padding:2 !important;
 }
+
+.home{ 
+    background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190622/ourmid/pngtree-medical-blue-technology-hospital-banner-background-image_208725.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.type{
+    margin-left: 15%;
+    margin-top: 15%;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: oblique;
+    font-size: 60px;
+}

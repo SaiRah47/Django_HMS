@@ -45,7 +45,7 @@ def profile(request):
 def medsHistory(request):
     person = Person.objects.get(user = User.objects.get(username=request.user))
     patient = Patient.objects.get(person=person)
-    prescriptions = Prescription.objects.filter(patient=patient)
+    prescriptions = Prescription.objects.filter(patient=patient).order_by('date')
     return render(request, 'patient/medicalHistory.html', {
         'person': person, 'prescriptions': prescriptions
     })

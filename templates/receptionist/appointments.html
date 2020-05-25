@@ -3,73 +3,12 @@
 {% block title %} | User Page {% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">HMS</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact Us</a>
-            </li>
-            {% if person.type == 1%}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'appointment' %}">Appointments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Invoice & Payments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%url 'p_profile' %}">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%url 'history'%}">Medical History</a>
-            </li>
-            {% elif person.type == 0 %}
-            <li class="nav-item">
-                <a class="nav-link" href="#">Appointments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Prescriptions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'appointment' %}">Dashboard</a>
-            </li>
-            {% endif %}
-            <li class="nav-item mr-3">
-                <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i
-                        class="fas fa-sign-out-alt"></i> Logout</a>
-                <form action="{% url 'logout' %}" method="POST" id="logout">
-                    {% csrf_token %}
-                    <input type="hidden">
-                </form>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login'  %}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'Register' %}">Register</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
+{% include 'receptionist/r_base.html' %}
 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-dark">
                 <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -120,11 +59,11 @@
 </div>
 <div class="container">
 <div class="row p-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appointmentModal">
+        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#appointmentModal">
             Create Appointment
         </button>
 </div>
-<table class=" mt-5 table table-striped table-condensed">
+<table class=" mt-5 table table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Patient Name</th>

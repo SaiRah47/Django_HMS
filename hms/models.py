@@ -17,5 +17,5 @@ class Receptionist(models.Model):
         return self.person.user.username
     
 
-# class Patient(models.Model):
+
 
